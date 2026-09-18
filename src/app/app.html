@@ -1,0 +1,75 @@
+<main class="game">
+  <header class="header">
+    <h1>Tic-Tac-Toe <span class="accent">Multiplier</span></h1>
+    <p class="tagline">Same tic-tac-toe, but now five in a row wins.</p>
+  </header>
+
+  <section class="panel" aria-label="Score and controls">
+    <div class="scoreboard">
+      <div class="score" [class.active]="game.currentPlayer() === 'X' && game.winner() === null">
+        <span class="mark x">X</span>
+        <span class="count">{{ game.xWins() }}</span>
+      </div>
+      <div class="score" [class.active]="game.currentPlayer() === 'O' && game.winner() === null">
+        <span class="mark o">O</span>
+        <span class="count">{{ game.oWins() }}</span>
+      </div>
+      <div class="score">
+        <span class="mark draw">&#8764;</span>
+        <span class="count">{{ game.draws() }}</span>
+      </div>
+    </div>
+
+    <p class="status" role="status" [attr.aria-live]="'polite'">
+      {{ game.statusText() }}
+    </p>
+
+    <button type="button" class="restart" (click)="game.restart()">New Game</button>
+  </section>
+
+  <section class="board-wrap">
+    <div class="board" [style.--size]="boardSize">
+      @for (row of game.board(); track rowIndex; let rowIndex = $index) {
+        @for (cell of row; track colIndex; let colIndex = $index) {
+          <button
+            type="button"
+            class="cell"
+            [class.x]="cell === 'X'"
+            [class.o]="cell === 'O'"
+            [class.win]="game.isWinningCell(rowIndex, colIndex)"
+            [disabled]="cell !== null || game.winner() !== null"
+            [style.--i]="rowIndex * boardSize + colIndex"
+            (click)="play(rowIndex, colIndex)"
+            aria-label="Row {{ rowIndex + 1 }}, column {{ colIndex + 1 }}"
+          >
+            {{ cell }}
+          </button>
+        }
+      }
+    </div>
+  </section>
+</main>
+
+@if (game.winner(); as winner) {
+  <div class="winner-overlay" role="alert">
+    <div class="winner-banner" [class.x]="winner === 'X'" [class.o]="winner === 'O'">
+      <span class="winner-symbol">{{ winner }}</span>
+      <span class="winner-text">Player {{ winner }} wins!</span>
+      <span class="winner-sub">Five in a row</span>
+    </div>
+  </div>
+
+  <div class="confetti" aria-hidden="true">
+    @for (piece of confettiPieces(); track piece.id) {
+      <span
+        class="confetti-piece"
+        [style.--x]="piece.x"
+        [style.--delay]="piece.delay"
+        [style.--duration]="piece.duration"
+        [style.--rotate]="piece.rotate"
+        [style.--drift]="piece.drift"
+        [style.--color]="piece.color"
+      ></span>
+    }
+  </div>
+}

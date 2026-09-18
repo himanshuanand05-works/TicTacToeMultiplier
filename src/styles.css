@@ -1,0 +1,40 @@
+:root {
+  --bg-top: #0b0b1a;
+  --bg-bottom: #14142b;
+  --panel: rgba(255, 255, 255, 0.05);
+  --cell: #1b1b36;
+  --cell-hover: #262649;
+  --border: rgba(255, 255, 255, 0.14);
+  --text: #e7e7f4;
+  --text-dim: #9c9cc0;
+  --cyan: #22d3ee;
+  --violet: #a78bfa;
+  --orange: #fb923c;
+  --win: rgba(250, 204, 21, 0.16);
+  --win-ring: #facc15;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  background:
+    radial-gradient(1100px 600px at 20% -10%, rgba(167, 139, 250, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(34, 211, 238, 0.14), transparent 55%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  background-attachment: fixed;
+  color: var(--text);
+}
